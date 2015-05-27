@@ -1,0 +1,33 @@
+{
+  "name": "omnihearth",
+  "productName": "OmniHearth",
+  "version": "0.0.0",
+  "description": "Hearthstone assistant",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": "hemslo/omnihearth",
+  "author": {
+    "name": "Hemslo Wang",
+    "email": "hemslo.wang@gmail.com",
+    "url": "github.com/hemslo/omnihearth"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-packager . $npm_package_productName --prune --asar --ignore=node_modules/electron-prebuilt --ignore=node_modules/electron-packager --ignore=.git"
+  },
+  "files": [
+    "index.js",
+    "index.html",
+    "index.css"
+  ],
+  "keywords": [
+    "electron-app"
+  ],
+  "devDependencies": {
+    "electron-packager": "^3.3.0",
+    "electron-prebuilt": "^0.25.2"
+  }
+}
