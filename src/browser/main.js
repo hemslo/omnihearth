@@ -8,8 +8,7 @@ require('crash-reporter').start();
 
 // prevent window being GC'd
 let mainWindow = null;
-let resource_path = path.resolve(__dirname, '..', '..', 'resource')
-
+let resource_path = path.resolve(__dirname, '..', '..', 'resource');
 
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
@@ -25,7 +24,6 @@ app.on('ready', function () {
   });
 
   mainWindow.loadUrl(`file://${resource_path}/index.html`);
-  // mainWindow.loadUrl(`file://${__dirname}/../../resource/index.html`);
 
   mainWindow.on('closed', function () {
     // deref the window
