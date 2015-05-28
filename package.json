@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "description": "Hearthstone assistant",
   "license": "MIT",
-  "main": "index.js",
+  "main": "./src/browser/main.js",
   "repository": "hemslo/omnihearth",
   "author": {
     "name": "Hemslo Wang",
@@ -16,7 +16,8 @@
   },
   "scripts": {
     "start": "electron .",
-    "build": "electron-packager . $npm_package_productName --prune --asar --ignore=node_modules/electron-prebuilt --ignore=node_modules/electron-packager --ignore=.git"
+    "build": "electron-packager . $npm_package_productName --prune --asar --ignore=node_modules/electron-prebuilt --ignore=node_modules/electron-packager --ignore=.git",
+    "test" : "node test/"
   },
   "files": [
     "index.js",
