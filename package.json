@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "description": "Hearthstone assistant",
   "license": "MIT",
-  "main": "index.js",
+  "main": "app.js",
   "repository": "hemslo/omnihearth",
   "author": {
     "name": "Hemslo Wang",
