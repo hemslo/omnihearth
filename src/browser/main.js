@@ -18,12 +18,13 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() {
   mainWindow = new BrowserWindow({
-    width: 600,
-    height: 400,
-    resizable: false
+    width: 800,
+    height: 600
   });
 
   mainWindow.loadUrl(`file://${static_path}/index.html`);
+
+  mainWindow.openDevTools();
 
   mainWindow.on('closed', function() {
     // deref the window
