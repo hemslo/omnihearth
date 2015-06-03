@@ -9,7 +9,7 @@ const LOG_REGEXES = {
 
 class LogParser {
   parse(log) {
-    const checkers = ['_zoneChange', '_attack'];
+    const checkers = ['_zoneChange', '_attack', '_start'];
     for (let checker of checkers) {
       let data = this[checker](log);
       if (data !== null) {
