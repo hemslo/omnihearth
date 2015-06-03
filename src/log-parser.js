@@ -3,7 +3,8 @@
 const LOG_REGEXES = {
   zoneChange: /name=(.*) id=(\d+).*to (FRIENDLY|OPPOSING) (.*)$/,
   actionStart: /ACTION_START Entity=\[(.*)\] SubType=(.*) Index=-?\d+ Target=\[(.*)\]/,
-  entity: /(?:name=([\w\s]+))? (?:id=(\d+))? zone=(\w+) zonePos=(\d+) cardId=(\w+) player=(\d+)/
+  entity: /(?:name=([\w\s]+))? (?:id=(\d+))? zone=(\w+) zonePos=(\d+) cardId=(\w+) player=(\d+)/,
+  start: /id=(\d) ChoiceType=MULLIGAN Cancelable=False CountMin=0 CountMax=\d/
 };
 
 class LogParser {
@@ -41,6 +42,16 @@ class LogParser {
         type: parts[2],
         entity: entity,
         target: target
+      };
+    }
+    return null;
+  }
+
+  _start(log) {
+    var parts = LOG_REGEXES.start.exec(log);
+    if (parts !== null) {
+      return {
+        id: parts[1]
       };
     }
     return null;
