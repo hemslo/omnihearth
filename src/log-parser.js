@@ -4,12 +4,13 @@ const LOG_REGEXES = {
   zoneChange: /name=(.*) id=(\d+).*to (FRIENDLY|OPPOSING) (.*)$/,
   actionStart: /ACTION_START Entity=\[(.*)\] SubType=(.*) Index=-?\d+ Target=\[(.*)\]/,
   entity: /(?:name=([\w\s]+))? (?:id=(\d+))? zone=(\w+) zonePos=(\d+) cardId=(\w+) player=(\d+)/,
-  start: /id=(\d) ChoiceType=MULLIGAN Cancelable=False CountMin=0 CountMax=\d/
+  start: /id=(\d) ChoiceType=MULLIGAN Cancelable=False CountMin=0 CountMax=\d/,
+  finish: /Entity=(.*) tag=PLAYSTATE value=(LOST|WON|TIED)/
 };
 
 class LogParser {
   parse(log) {
-    const checkers = ['_zoneChange', '_attack', '_start'];
+    const checkers = ['_zoneChange', '_attack', '_start', '_finish'];
     for (let checker of checkers) {
       let data = this[checker](log);
       if (data !== null) {
@@ -52,6 +53,17 @@ class LogParser {
     if (parts !== null) {
       return {
         id: parts[1]
+      };
+    }
+    return null;
+  }
+
+  _finish(log) {
+    var parts = LOG_REGEXES.finish.exec(log);
+    if (parts !== null) {
+      return {
+        name: parts[1],
+        status: parts[2]
       };
     }
     return null;
