@@ -23,13 +23,13 @@ class LogParser {
   _zoneChange(log) {
     var parts = LOG_REGEXES.zoneChange.exec(log);
     if (parts !== null) {
-      var data = {
+      return {
+        actioType: 'zoneChange',
         cardName: parts[1],
         cardId: parseInt(parts[2]),
         team: parts[3],
         zone: parts[4]
       };
-      return data;
     }
     return null;
   }
@@ -40,6 +40,7 @@ class LogParser {
       var entity = this._parseEntity(parts[1]);
       var target = this._parseEntity(parts[3]);
       return {
+        actionType: 'attack',
         type: parts[2],
         entity: entity,
         target: target
@@ -52,6 +53,7 @@ class LogParser {
     var parts = LOG_REGEXES.start.exec(log);
     if (parts !== null) {
       return {
+        actionType: 'start',
         id: parts[1]
       };
     }
@@ -62,6 +64,7 @@ class LogParser {
     var parts = LOG_REGEXES.finish.exec(log);
     if (parts !== null) {
       return {
+        actionType: 'finish',
         name: parts[1],
         status: parts[2]
       };
