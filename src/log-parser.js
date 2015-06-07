@@ -9,34 +9,37 @@ const LOG_REGEXES = {
 };
 
 class LogParser {
+  constructor(name) {
+    this.routes = {
+      'zoneChange': '_zoneChange',
+      'actionStart': '_attack',
+      'start': '_start',
+      'finish': '_finish'
+    };
+  }
+
   parse(log) {
-    const checkers = ['_zoneChange', '_attack', '_start', '_finish'];
-    for (let checker of checkers) {
-      let data = this[checker](log);
-      if (data !== null) {
-        return data;
+    for (let key in this.routes) {
+      if (LOG_REGEXES[key].test(log)) {
+        return this[this.routes[key]](log);
       }
     }
-    return null;
   }
 
   _zoneChange(log) {
     var parts = LOG_REGEXES.zoneChange.exec(log);
-    if (parts !== null) {
-      return {
-        actioType: 'zoneChange',
-        cardName: parts[1],
-        cardId: parseInt(parts[2]),
-        team: parts[3],
-        zone: parts[4]
-      };
-    }
-    return null;
+    return {
+      actioType: 'zoneChange',
+      cardName: parts[1],
+      cardId: parseInt(parts[2]),
+      team: parts[3],
+      zone: parts[4]
+    };
   }
 
   _attack(log) {
     var parts = LOG_REGEXES.actionStart.exec(log);
-    if (parts !== null && parts[2] === 'ATTACK') {
+    if (parts[2] === 'ATTACK') {
       var entity = this._parseEntity(parts[1]);
       var target = this._parseEntity(parts[3]);
       return {
@@ -51,25 +54,19 @@ class LogParser {
 
   _start(log) {
     var parts = LOG_REGEXES.start.exec(log);
-    if (parts !== null) {
-      return {
-        actionType: 'start',
-        id: parts[1]
-      };
-    }
-    return null;
+    return {
+      actionType: 'start',
+      id: parts[1]
+    };
   }
 
   _finish(log) {
     var parts = LOG_REGEXES.finish.exec(log);
-    if (parts !== null) {
-      return {
-        actionType: 'finish',
-        name: parts[1],
-        status: parts[2]
-      };
-    }
-    return null;
+    return {
+      actionType: 'finish',
+      name: parts[1],
+      status: parts[2]
+    };
   }
 
   _parseEntity(entity) {
