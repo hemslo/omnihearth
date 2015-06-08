@@ -5,7 +5,8 @@ const LOG_REGEXES = {
   actionStart: /ACTION_START Entity=\[(.*)\] SubType=(.*) Index=-?\d+ Target=\[(.*)\]/,
   entity: /(?:name=([\w\s]+))? (?:id=(\d+))? zone=(\w+) zonePos=(\d+) cardId=(\w+) player=(\d+)/,
   start: /id=(\d) ChoiceType=MULLIGAN Cancelable=False CountMin=0 CountMax=\d/,
-  finish: /Entity=(.*) tag=PLAYSTATE value=(LOST|WON|TIED)/
+  finish: /Entity=(.*) tag=PLAYSTATE value=(LOST|WON|TIED)/,
+  tagChange: /TAG_CHANGE Entity=(.+) tag=(\w+) value=(\w+)/
 };
 
 class LogParser {
@@ -14,7 +15,8 @@ class LogParser {
       'zoneChange': '_zoneChange',
       'actionStart': '_attack',
       'start': '_start',
-      'finish': '_finish'
+      'finish': '_finish',
+      'tagChange': '_tagChange'
     };
   }
 
@@ -66,6 +68,16 @@ class LogParser {
       actionType: 'finish',
       name: parts[1],
       status: parts[2]
+    };
+  }
+
+  _tagChange(log) {
+    var parts = LOG_REGEXES.tagChange.exec(log);
+    return {
+      actionType: 'tagChange',
+      entity: parts[1],
+      tag: parts[2],
+      value: parts[3]
     };
   }
 
