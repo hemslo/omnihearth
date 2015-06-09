@@ -1,7 +1,8 @@
 'use strict';
 
 const LOG_REGEXES = {
-  zoneChange: /name=(.*) id=(\d+).*to (FRIENDLY|OPPOSING) (.*)$/,
+  zoneChange: /\[name=(.*) id=(\d+) zone=(.*) zonePos=(\d+) cardId=(.*) player=(\d)\] zone from (.*) -> (.*)/,
+  zoneChangeInvalid: /\[id=(\d+) cardId= type=INVALID zone=(.*) zonePos=(\d+) player=(\d)\] zone from (.*) -> (.*)/,
   actionStart: /ACTION_START Entity=\[(.*)\] SubType=(.*) Index=-?\d+ Target=\[(.*)\]/,
   entity: /(?:name=([\w\s]+))? (?:id=(\d+))? zone=(\w+) zonePos=(\d+) cardId=(\w+) player=(\d+)/,
   start: /id=(\d) ChoiceType=MULLIGAN Cancelable=False CountMin=0 CountMax=\d/,
@@ -13,6 +14,7 @@ class LogParser {
   constructor(name) {
     this.routes = {
       'zoneChange': '_zoneChange',
+      'zoneChangeInvalid': '_zoneChangeInvalid',
       'actionStart': '_attack',
       'start': '_start',
       'finish': '_finish',
@@ -32,10 +34,29 @@ class LogParser {
     var parts = LOG_REGEXES.zoneChange.exec(log);
     return {
       actioType: 'zoneChange',
-      cardName: parts[1],
-      cardId: parseInt(parts[2]),
-      team: parts[3],
-      zone: parts[4]
+      name: parts[1],
+      id: parts[2],
+      zone: parts[3],
+      zonePos: parts[4],
+      cardId: parts[5],
+      player: parts[6],
+      from: parts[7],
+      to: parts[8]
+    };
+  }
+
+  _zoneChangeInvalid(log) {
+    var parts = LOG_REGEXES.zoneChange.exec(log);
+    return {
+      actioType: 'zoneChange',
+      name: null,
+      id: parts[1],
+      zone: parts[2],
+      zonePos: parts[3],
+      cardId: null,
+      player: parts[4],
+      from: parts[5],
+      to: parts[6]
     };
   }
 
