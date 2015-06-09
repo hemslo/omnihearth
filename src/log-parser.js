@@ -46,7 +46,7 @@ class LogParser {
   }
 
   _zoneChangeInvalid(log) {
-    var parts = LOG_REGEXES.zoneChange.exec(log);
+    var parts = LOG_REGEXES.zoneChangeInvalid.exec(log);
     return {
       actioType: 'zoneChange',
       name: null,
