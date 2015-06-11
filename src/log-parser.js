@@ -15,7 +15,7 @@ class LogParser {
     this.routes = {
       'zoneChange': '_zoneChange',
       'zoneChangeInvalid': '_zoneChangeInvalid',
-      'actionStart': '_attack',
+      'actionStart': '_actionStart',
       'start': '_start',
       'finish': '_finish',
       'tagChange': '_tagChange'
@@ -60,19 +60,14 @@ class LogParser {
     };
   }
 
-  _attack(log) {
+  _actionStart(log) {
     var parts = LOG_REGEXES.actionStart.exec(log);
-    if (parts[2] === 'ATTACK') {
-      var entity = this._parseEntity(parts[1]);
-      var target = this._parseEntity(parts[3]);
-      return {
-        actionType: 'attack',
-        type: parts[2],
-        entity: entity,
-        target: target
-      };
-    }
-    return null;
+    return {
+      actionType: 'actionStart',
+      entity: this._parseEntity(parts[1]) || parts[1],
+      target: this._parseEntity(parts[3]) || parts[3],
+      subtype: parts[2]
+    };
   }
 
   _start(log) {
