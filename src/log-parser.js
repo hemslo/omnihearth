@@ -1,13 +1,12 @@
 'use strict';
 
 const LOG_REGEXES = {
-  zoneChange: /\[name=(.*) id=(\d+) zone=(.*) zonePos=(\d+) cardId=(.*) player=(\d)\] zone from (.*) -> (.*)/,
-  zoneChangeInvalid: /\[id=(\d+) cardId= type=INVALID zone=(.*) zonePos=(\d+) player=(\d)\] zone from (.*) -> (.*)/,
-  actionStart: /ACTION_START Entity=\[(.*)\] SubType=(.*) Index=-?\d+ Target=\[(.*)\]/,
-  entity: /(?:name=([\w\s]+))? (?:id=(\d+))? zone=(\w+) zonePos=(\d+) cardId=(\w+) player=(\d+)/,
-  start: /id=(\d) ChoiceType=MULLIGAN Cancelable=False CountMin=0 CountMax=\d/,
-  finish: /Entity=(.*) tag=PLAYSTATE value=(LOST|WON|TIED)/,
-  tagChange: /TAG_CHANGE Entity=(.+) tag=(\w+) value=(\w+)/
+  zoneChange: /\[Zone\].*\[name=(.*) id=(\d+) zone=(.*) zonePos=(\d+) cardId=(.*) player=(\d)\] zone from (.*) -> (.*)/,
+  zoneChangeInvalid: /\[Zone\].*\[id=(\d+) cardId= type=INVALID zone=(.*) zonePos=(\d+) player=(\d)\] zone from (.*) -> (.*)/,
+  actionStart: /\[Power\].*ACTION_START Entity=\[(.*)\] SubType=(.*) Index=-?\d+ Target=\[(.*)\]/,
+  start: /\[Power\].*CREATE_GAME/,
+  tagChange: /TAG_CHANGE Entity=(.+) tag=(\w+) value=(\w+)/,
+  entity: /(?:name=([\w\s]+))? (?:id=(\d+))? zone=(\w+) zonePos=(\d+) cardId=(\w+) player=(\d+)/
 };
 
 class LogParser {
@@ -17,7 +16,6 @@ class LogParser {
       'zoneChangeInvalid': '_zoneChangeInvalid',
       'actionStart': '_actionStart',
       'start': '_start',
-      'finish': '_finish',
       'tagChange': '_tagChange'
     };
   }
@@ -71,19 +69,8 @@ class LogParser {
   }
 
   _start(log) {
-    var parts = LOG_REGEXES.start.exec(log);
     return {
-      actionType: 'start',
-      id: parts[1]
-    };
-  }
-
-  _finish(log) {
-    var parts = LOG_REGEXES.finish.exec(log);
-    return {
-      actionType: 'finish',
-      name: parts[1],
-      status: parts[2]
+      actionType: 'start'
     };
   }
 
