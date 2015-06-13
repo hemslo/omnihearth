@@ -1,5 +1,6 @@
 'use strict';
 const app = require('app');
+const Menu = require('menu');
 const BrowserWindow = require('browser-window');
 const path = require('path');
 
@@ -24,11 +25,50 @@ app.on('ready', function() {
 
   mainWindow.loadUrl(`file://${static_path}/index.html`);
 
-  mainWindow.openDevTools();
+  let template = [
+    {
+     label: 'View',
+     submenu: [
+       {
+         label: 'Reload',
+         accelerator: 'Command+R',
+         click: function() {
+             mainWindow.restart();
+             }
+       },
+       {
+         label: 'Toggle Developer Tools',
+         accelerator: 'Alt+Command+I',
+         click: function() {
+             mainWindow.toggleDevTools();
+             }
+       },]
+    },
+    {
+     label: 'Window',
+     submenu: [
+       {
+         label: 'Minimize',
+         accelerator: 'Command+M',
+         selector: 'performMiniaturize:'
+       },
+       {
+         label: 'Close',
+         accelerator: 'Command+W',
+         selector: 'performClose:'
+       },
+       {
+         type: 'separator'
+       },
+       {
+         label: 'Bring All to Front',
+         selector: 'arrangeInFront:'
+       },]
+    }];
+  let menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 
   mainWindow.on('closed', function() {
-    // deref the window
-    // for multiple windows store them in an array
     mainWindow = null;
   });
 });

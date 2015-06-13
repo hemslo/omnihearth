@@ -17,7 +17,7 @@
   "scripts": {
     "start": "electron .",
     "build": "electron-packager . $npm_package_productName --prune --asar --ignore=node_modules/electron-prebuilt --ignore=node_modules/electron-packager --ignore=.git",
-    "test" : "node test/"
+    "test": "node test/"
   },
   "files": [
     "index.js",
@@ -30,5 +30,10 @@
   "devDependencies": {
     "electron-packager": "^3.3.0",
     "electron-prebuilt": "^0.25.2"
+  },
+  "dependencies": {
+    "flux-react": "^2.6.6",
+    "gulp": "^3.9.0",
+    "react": "^0.13.3"
   }
 }
