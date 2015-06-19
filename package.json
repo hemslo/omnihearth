@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "babel": "^5.5.6",
+    "bootstrap": "^3.3.5",
     "flux-react": "^2.6.6",
     "gulp": "^3.9.0",
     "node-jsx": "^0.13.3",

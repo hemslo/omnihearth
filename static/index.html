@@ -1,25 +1,55 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>OmniHearth</title>
-		<link rel="stylesheet" href="index.css">
-		<script type="text/javascript">
+
+<head>
+	<meta charset="utf-8">
+	<title>OmniHearth</title>
+	<link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript">
 		require('babel/register');
-		</script>
-	</head>
-	<body>
-        <script type="text/javascript" charset="utf-8">
-            require("./index.js");
-        </script>
-		<div class="container">
-			<section class="main">
-                <div id="content">
-                </div>
-      </section>
+	</script>
+</head>
+
+<body>
+	<script type="text/javascript" charset="utf-8">
+		require("./index.js");
+	</script>
+	<div class="container">
+		<div class="col-md-2">
+			<h2>Opponent Played</h2>
 		</div>
-		<script type="text/javascript">
+		<div class="col-md-8">
+			<h2>Main Zone</h2>
+			<div class="row">
+				<h2>Opponent Hand</h2>
+			</div>
+			<div class="row">
+				<h2>Opponent Secret</h2>
+			</div>
+			<div class="row">
+				<h2>Opponent Play</h2>
+			</div>
+			<div class="row">
+				<h2>Play</h2>
+			</div>
+			<div class="row">
+				<h2>Secret</h2>
+			</div>
+			<div class="row">
+				<h2>Hand</h2>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<h2>Player's Deck</h2>
+		</div>
+		<section class="main">
+			<div id="content">
+			</div>
+		</section>
+	</div>
+	<script type="text/javascript">
 		require('./gui.jsx');
-		</script>
-	</body>
+	</script>
+</body>
+
 </html>
