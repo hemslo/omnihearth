@@ -32,8 +32,11 @@
     "electron-prebuilt": "^0.25.2"
   },
   "dependencies": {
+    "babel": "^5.5.6",
     "flux-react": "^2.6.6",
     "gulp": "^3.9.0",
-    "react": "^0.13.3"
+    "node-jsx": "^0.13.3",
+    "react": "^0.13.3",
+    "react-tools": "^0.13.3"
   }
 }
