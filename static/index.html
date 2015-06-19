@@ -4,15 +4,22 @@
 		<meta charset="utf-8">
 		<title>OmniHearth</title>
 		<link rel="stylesheet" href="index.css">
-		<script src="index.js"></script>
+		<script type="text/javascript">
+		require('babel/register');
+		</script>
 	</head>
 	<body>
+        <script type="text/javascript" charset="utf-8">
+            require("./index.js");
+        </script>
 		<div class="container">
-			<header>
-				<h1>OmniHearth</h1>
-			</header>
-			<section class="main"></section>
-			<footer></footer>
+			<section class="main">
+                <div id="content">
+                </div>
+      </section>
 		</div>
+		<script type="text/javascript">
+		require('./gui.jsx');
+		</script>
 	</body>
 </html>
